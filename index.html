@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vipin rawat Markets</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+    :root { --bg:#09110f; --panel:#101b18; --panel-2:#14231e; --line:#22332d; --text:#e9f0e8; --muted:#8b9e94; --mint:#b6f36b; --green:#55d49b; --red:#ff806b; --yellow:#f5c967; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:Manrope, sans-serif; letter-spacing:0; }
+    .app { display:grid; grid-template-columns:235px 1fr; min-height:100vh; }
+    aside { border-right:1px solid var(--line); padding:28px 18px; display:flex; flex-direction:column; background:#0b1512; }
+    .brand { display:flex; align-items:center; gap:11px; font-weight:800; font-size:17px; margin:0 10px 48px; }
+    .mark { width:28px; height:28px; border-radius:8px 8px 8px 2px; background:var(--mint); color:#132015; display:grid; place-items:center; font-weight:800; }
+    nav { display:grid; gap:7px; }
+    nav button { border:0; color:var(--muted); background:transparent; padding:12px 13px; border-radius:8px; text-align:left; font:600 13px Manrope; cursor:pointer; display:flex; gap:12px; align-items:center; }
+    nav button.active, nav button:hover { background:#1b3129; color:var(--mint); }
+    .nav-icon { width:19px; text-align:center; font-family:'DM Mono'; font-size:14px; }
+    .side-bottom { margin-top:auto; border-top:1px solid var(--line); padding:20px 10px 0; color:var(--muted); font-size:11px; line-height:1.6; }
+    main { padding:28px 34px 42px; max-width:1600px; width:100%; margin:auto; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
+    .eyebrow { color:var(--mint); text-transform:uppercase; letter-spacing:1.5px; font:500 10px 'DM Mono'; }
+    h1 { font-size:26px; margin:7px 0 0; letter-spacing:-.7px; }
+    .top-actions { display:flex; gap:12px; align-items:center; }
+    .status { color:var(--green); font:500 11px 'DM Mono'; display:flex; align-items:center; gap:7px; }
+    .status i { width:7px; height:7px; background:var(--green); border-radius:50%; display:block; box-shadow:0 0 12px var(--green); }
+    .avatar { width:35px; height:35px; background:#e2b7a8; color:#32201e; border-radius:50%; display:grid; place-items:center; font-size:12px; font-weight:800; }
+    .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:22px; }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:19px; }
+    .card-label { color:var(--muted); font-size:11px; margin-bottom:14px; }
+    .card-value { font-size:22px; font-weight:700; letter-spacing:-.8px; }
+    .card-value small { color:var(--green); font:500 11px 'DM Mono'; margin-left:8px; letter-spacing:0; }
+    .layout { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(280px,.8fr); gap:22px; }
+    .section { background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+    .section-head { padding:18px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+    .section-head h2 { font-size:14px; margin:0; }
+    .subtle { color:var(--muted); font-size:11px; }
+    .chart-wrap { padding:18px 20px 15px; }
+    .instrument { display:flex; gap:23px; align-items:center; margin-bottom:22px; }
+    .ticker { font:500 11px 'DM Mono'; color:var(--mint); }
+    .price { font-size:29px; font-weight:700; margin-top:3px; }
+    .positive { color:var(--green); }
+    .negative { color:var(--red); }
+    .ranges { display:flex; gap:4px; }
+    .ranges button { background:transparent; border:0; color:var(--muted); padding:7px 9px; font:11px 'DM Mono'; cursor:pointer; border-radius:4px; }
+    .ranges button.active, .ranges button:hover { background:#263b31; color:var(--mint); }
+    .chart { width:100%; height:265px; display:block; background:linear-gradient(180deg,rgba(58,121,86,.10),transparent 75%); border-radius:6px; }
+    .chart-grid { stroke:#21362d; stroke-width:1; stroke-dasharray:3 5; }
+    .chart-line { fill:none; stroke:var(--mint); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+    .chart-area { fill:url(#area); }
+    .axis { display:flex; justify-content:space-between; color:#62756b; font:10px 'DM Mono'; padding-top:8px; }
+    .watchlist { min-height:380px; }
+    .watch-row { display:grid; grid-template-columns:1.2fr .9fr .65fr; align-items:center; padding:16px 20px; border-bottom:1px solid #1a2a24; cursor:pointer; }
+    .watch-row:hover { background:#162720; }
+    .coin { display:flex; align-items:center; gap:10px; font-size:12px; font-weight:700; }
+    .coin-badge { width:27px; height:27px; border-radius:50%; display:grid; place-items:center; font:11px 'DM Mono'; background:#2a3932; color:var(--mint); }
+    .coin-name { display:block; color:var(--muted); font:10px 'DM Mono'; margin-top:3px; font-weight:400; }
+    .watch-price { text-align:right; font:12px 'DM Mono'; }
+    .change { text-align:right; font:11px 'DM Mono'; }
+    .right-col { display:grid; gap:22px; align-content:start; }
+    .order-tabs { display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid var(--line); }
+    .order-tabs button { border:0; padding:15px; background:transparent; color:var(--muted); font:600 12px Manrope; cursor:pointer; }
+    .order-tabs button.active { color:var(--text); border-bottom:2px solid var(--mint); }
+    .order-body { padding:19px; }
+    label { display:block; color:var(--muted); font-size:11px; margin-bottom:8px; }
+    .input { background:#0b1512; border:1px solid var(--line); border-radius:5px; padding:11px 12px; display:flex; justify-content:space-between; color:var(--text); font:12px 'DM Mono'; margin-bottom:14px; width:100%; }
+    select.input, input.input { appearance:none; outline:0; }
+    input.input { display:block; }
+    .input span { color:var(--muted); }
+    .buy { width:100%; border:0; background:var(--mint); color:#172119; padding:12px; border-radius:5px; font:800 12px Manrope; cursor:pointer; margin-top:4px; }
+    .buy:hover { background:#d1ff8d; }
+    .order-note { color:var(--muted); text-align:center; font-size:10px; margin:12px 0 0; }
+    .learn { padding:18px 20px; }
+    .learn-item { display:flex; gap:12px; padding:13px 0; border-bottom:1px solid #1a2a24; }
+    .learn-item:last-child { border:0; padding-bottom:2px; }
+    .learn-num { color:var(--mint); font:12px 'DM Mono'; }
+    .learn h3 { font-size:12px; margin:0 0 4px; }
+    .learn p { color:var(--muted); font-size:10px; line-height:1.5; margin:0; }
+    .toast { position:fixed; right:25px; bottom:25px; background:var(--mint); color:#152018; padding:13px 16px; border-radius:6px; font-size:12px; font-weight:700; transform:translateY(90px); opacity:0; transition:.25s; }
+    .toast.show { transform:translateY(0); opacity:1; }
+    .profile-actions { display:flex; gap:8px; align-items:center; }
+    .profile-button { border:0; background:transparent; color:var(--text); cursor:pointer; padding:0; }
+    .logout-button { border:1px solid var(--line); background:transparent; color:var(--muted); border-radius:5px; padding:7px 9px; font:11px 'DM Mono'; cursor:pointer; }
+    .logout-button:hover { color:var(--mint); border-color:var(--mint); }
+    .market-section { display:none; margin-bottom:22px; }
+    .market-section.visible { display:block; }
+    .market-table { width:100%; border-collapse:collapse; font-size:12px; }
+    .market-table th { color:var(--muted); font:10px 'DM Mono'; text-align:left; padding:13px 20px; border-bottom:1px solid var(--line); }
+    .market-table td { padding:15px 20px; border-bottom:1px solid #1a2a24; }
+    .market-table tr:last-child td { border-bottom:0; }
+    .market-table td:not(:first-child), .market-table th:not(:first-child) { text-align:right; }
+    .auth-backdrop { position:fixed; inset:0; background:rgba(3,8,6,.82); display:grid; place-items:center; z-index:5; }
+    .auth-backdrop.hidden { display:none; }
+    .auth-modal { width:min(390px, calc(100% - 30px)); background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:27px; box-shadow:0 20px 60px #0008; }
+    .auth-modal h2 { margin:7px 0 6px; font-size:22px; }
+    .auth-modal p { color:var(--muted); font-size:11px; margin:0 0 22px; }
+    .auth-modal input { margin-bottom:13px; }
+    .auth-close { float:right; border:0; background:transparent; color:var(--muted); font-size:20px; cursor:pointer; }
+    @media (max-width:900px) { .app { grid-template-columns:1fr; } aside { border-right:0; border-bottom:1px solid var(--line); padding:16px; } .brand { margin-bottom:15px; } nav { display:flex; overflow:auto; } nav button { white-space:nowrap; } .side-bottom { display:none; } main { padding:22px 16px 35px; } .cards { grid-template-columns:repeat(2,1fr); } .layout { grid-template-columns:1fr; } }
+    @media (max-width:520px) { .topbar { align-items:flex-start; } .status { display:none; } h1 { font-size:23px; } .cards { gap:9px; } .card { padding:14px; } .card-value { font-size:18px; } .chart-wrap { padding:15px 13px; } .section-head { padding:15px; } .watch-row { padding:14px 15px; grid-template-columns:1.15fr .9fr .7fr; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="brand"><div class="mark">V</div> VIPIN RAWAT</div>
+      <nav>
+        <button class="active"><span class="nav-icon">[]</span>Overview</button>
+        <button><span class="nav-icon">/\</span>Markets</button>
+        <button><span class="nav-icon">+</span>Paper trade</button>
+        <button><span class="nav-icon">*</span>Watchlist</button>
+        <button><span class="nav-icon">?</span>Learn</button>
+      </nav>
+      <div class="side-bottom">MARKET STATUS<br><span class="positive">All systems operational</span><br><br>Demo environment<br>Prices delayed 15 min</div>
+    </aside>
+    <main>
+      <header class="topbar"><div><div class="eyebrow">Tuesday, 25 August 2026</div><h1>Good morning, Vipin.</h1></div><div class="top-actions"><div class="status"><i></i>MARKETS OPEN</div><div class="profile-actions"><button class="profile-button" id="profileButton" title="Open profile"><div class="avatar">VR</div></button><button class="logout-button" id="logoutButton">Log out</button></div></div></header>
+      <section class="cards">
+        <div class="card"><div class="card-label">Portfolio value</div><div class="card-value">$24,680.40 <small>+8.4%</small></div></div>
+        <div class="card"><div class="card-label">Today's return</div><div class="card-value positive">+$342.18 <small>+1.41%</small></div></div>
+        <div class="card"><div class="card-label">Buying power</div><div class="card-value">$8,420.00</div></div>
+        <div class="card"><div class="card-label">Open positions</div><div class="card-value">07 <small>2 winners</small></div></div>
+      </section>
+      <section class="section market-section" id="marketSection"><div class="section-head"><h2>All markets</h2><span class="subtle">Demo prices · USD</span></div><table class="market-table"><thead><tr><th>Asset</th><th>Last price</th><th>24h change</th><th>Market</th></tr></thead><tbody><tr><td><b>Apple Inc.</b> <span class="coin-name">AAPL</span></td><td>$227.16</td><td class="positive">+2.18%</td><td>NASDAQ</td></tr><tr><td><b>NVIDIA Corp.</b> <span class="coin-name">NVDA</span></td><td>$182.44</td><td class="positive">+4.72%</td><td>NASDAQ</td></tr><tr><td><b>Tesla Inc.</b> <span class="coin-name">TSLA</span></td><td>$341.27</td><td class="negative">-0.84%</td><td>NASDAQ</td></tr><tr><td><b>Bitcoin</b> <span class="coin-name">BTC</span></td><td>$112,408</td><td class="positive">+1.06%</td><td>Crypto</td></tr><tr><td><b>Gold</b> <span class="coin-name">XAU</span></td><td>$3,382.40</td><td class="positive">+0.36%</td><td>Commodities</td></tr></tbody></table></section>
+      <div class="layout">
+        <div class="left-col">
+          <section class="section"><div class="section-head"><h2>Market overview</h2><span class="subtle">Demo data · USD</span></div><div class="chart-wrap"><div class="instrument"><div><div class="ticker">NASDAQ · IXIC</div><div class="price">17,843.12 <span class="positive" style="font:500 12px 'DM Mono'">+1.24%</span></div></div><div class="ranges"><button>1D</button><button class="active">1W</button><button>1M</button><button>1Y</button></div></div><svg class="chart" viewBox="0 0 900 265" preserveAspectRatio="none" aria-label="NASDAQ performance chart"><defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#b6f36b" stop-opacity=".28"/><stop offset="1" stop-color="#b6f36b" stop-opacity="0"/></linearGradient></defs><g class="chart-grid"><path d="M0 35H900M0 100H900M0 165H900M0 230H900"/><path d="M120 0V265M270 0V265M420 0V265M570 0V265M720 0V265"/></g><path class="chart-area" d="M0 218 L38 200 L70 209 L106 175 L145 190 L180 151 L220 166 L260 130 L298 144 L338 108 L378 125 L416 87 L456 99 L497 78 L536 111 L574 91 L614 58 L655 71 L690 40 L730 65 L772 48 L808 71 L850 36 L900 19 V265 H0 Z"/><path class="chart-line" d="M0 218 L38 200 L70 209 L106 175 L145 190 L180 151 L220 166 L260 130 L298 144 L338 108 L378 125 L416 87 L456 99 L497 78 L536 111 L574 91 L614 58 L655 71 L690 40 L730 65 L772 48 L808 71 L850 36 L900 19"/><circle cx="850" cy="36" r="5" fill="#b6f36b"/></svg><div class="axis"><span>Aug 19</span><span>Aug 21</span><span>Aug 23</span><span>Aug 25</span></div></div></section>
+          <section class="section watchlist" style="margin-top:22px"><div class="section-head"><h2>Watchlist</h2><span class="subtle">5 assets</span></div><div class="watch-row" data-symbol="AAPL"><div class="coin"><div class="coin-badge">A</div><div>Apple Inc.<span class="coin-name">AAPL · NASDAQ</span></div></div><div class="watch-price">$227.16</div><div class="change positive">+2.18%</div></div><div class="watch-row" data-symbol="NVDA"><div class="coin"><div class="coin-badge">N</div><div>NVIDIA Corp.<span class="coin-name">NVDA · NASDAQ</span></div></div><div class="watch-price">$182.44</div><div class="change positive">+4.72%</div></div><div class="watch-row" data-symbol="TSLA"><div class="coin"><div class="coin-badge">T</div><div>Tesla Inc.<span class="coin-name">TSLA · NASDAQ</span></div></div><div class="watch-price">$341.27</div><div class="change negative">-0.84%</div></div><div class="watch-row" data-symbol="BTC"><div class="coin"><div class="coin-badge">B</div><div>Bitcoin<span class="coin-name">BTC · CRYPTO</span></div></div><div class="watch-price">$112,408</div><div class="change positive">+1.06%</div></div></section>
+        </div>
+        <div class="right-col"><section class="section"><div class="order-tabs"><button class="active">Buy</button><button>Sell</button></div><div class="order-body"><label for="assetSelect">Asset</label><select class="input" id="assetSelect"><option value="AAPL" data-price="227.16">AAPL - Apple Inc.</option><option value="NVDA" data-price="182.44">NVDA - NVIDIA Corp.</option><option value="TSLA" data-price="341.27">TSLA - Tesla Inc.</option><option value="BTC" data-price="112408">BTC - Bitcoin</option></select><label for="orderType">Order type</label><select class="input" id="orderType"><option>Market order</option><option>Limit order</option></select><label for="sharesInput">Shares</label><input class="input" id="sharesInput" type="number" min="0" step="1" value="0" placeholder="0"><label>Estimated cost</label><div class="input"><span id="estimatedCost">$0.00</span><span>USD</span></div><button class="buy" id="tradeButton">Place paper order</button><p class="order-note">No real money involved</p></div></section><section class="section"><div class="section-head"><h2>Learn as you go</h2><span class="subtle">3 min reads</span></div><div class="learn"><div class="learn-item"><div class="learn-num">01</div><div><h3>What moves a stock price?</h3><p>Understand supply, demand and market sentiment.</p></div></div><div class="learn-item"><div class="learn-num">02</div><div><h3>Risk before reward</h3><p>Build the habit of sizing every position carefully.</p></div></div><div class="learn-item"><div class="learn-num">03</div><div><h3>Reading a candlestick</h3><p>See the story behind open, high, low and close.</p></div></div></div></section></div>
+      </div>
+    </main>
+  </div><div class="toast" id="toast">Paper order placed successfully</div><div class="auth-backdrop hidden" id="authBackdrop"><form class="auth-modal" id="authForm"><button type="button" class="auth-close" id="authClose">×</button><div class="eyebrow">VIPIN RAWAT ACCOUNT</div><h2>Welcome back, Vipin.</h2><p>Sign in to keep your paper portfolio synced.</p><label for="emailInput">Email</label><input class="input" id="emailInput" type="email" placeholder="vipin@example.com" required><label for="passwordInput">Password</label><input class="input" id="passwordInput" type="password" placeholder="••••••••" minlength="4" required><button class="buy" type="submit">Log in to demo</button></form></div>
+  <script>
+    const toast = document.getElementById('toast');
+    const authBackdrop = document.getElementById('authBackdrop');
+    const showToast = message => { toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000); };
+    document.getElementById('profileButton').addEventListener('click', () => authBackdrop.classList.remove('hidden'));
+    document.getElementById('authClose').addEventListener('click', () => authBackdrop.classList.add('hidden'));
+    document.getElementById('logoutButton').addEventListener('click', () => showToast('You have been logged out'));
+    document.getElementById('authForm').addEventListener('submit', event => { event.preventDefault(); authBackdrop.classList.add('hidden'); showToast('Demo login successful'); });
+    const assetSelect = document.getElementById('assetSelect');
+    const sharesInput = document.getElementById('sharesInput');
+    const estimatedCost = document.getElementById('estimatedCost');
+    const updateEstimate = () => {
+      const price = Number(assetSelect.selectedOptions[0].dataset.price);
+      estimatedCost.textContent = '$' + (price * Number(sharesInput.value || 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+    assetSelect.addEventListener('change', updateEstimate);
+    sharesInput.addEventListener('input', updateEstimate);
+    document.getElementById('tradeButton').addEventListener('click', () => {
+      if (Number(sharesInput.value) <= 0) { sharesInput.focus(); sharesInput.reportValidity(); return; }
+      showToast(`${sharesInput.value} ${assetSelect.value} paper shares added`);
+    });
+    document.querySelectorAll('.ranges button').forEach(button => button.addEventListener('click', () => { document.querySelector('.ranges .active').classList.remove('active'); button.classList.add('active'); }));
+    document.querySelectorAll('.order-tabs button').forEach(button => button.addEventListener('click', () => { document.querySelector('.order-tabs .active').classList.remove('active'); button.classList.add('active'); document.getElementById('tradeButton').textContent = button.textContent + ' paper order'; }));
+    document.querySelectorAll('.watch-row').forEach(row => row.addEventListener('click', () => {
+      document.querySelector('.ticker').textContent = row.dataset.symbol + (row.dataset.symbol === 'BTC' ? ' · CRYPTO' : ' · NASDAQ');
+      assetSelect.value = row.dataset.symbol;
+      updateEstimate();
+    }));
+    document.querySelectorAll('nav button').forEach(button => button.addEventListener('click', () => {
+      document.querySelector('nav button.active').classList.remove('active');
+      button.classList.add('active');
+      const isMarkets = button.textContent.includes('Markets');
+      document.getElementById('marketSection').classList.toggle('visible', isMarkets);
+      showToast(button.textContent.trim() + ' view selected');
+    }));
+  </script>
+</body>
+</html>
